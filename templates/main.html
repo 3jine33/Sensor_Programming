@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script>
+            temperature = "{{temp_value}}";
+
+            // hide buttons on load
+            function hideButton() {
+				document.getElementById("videoButton").style.visibility="hidden";
+                if (temperature<30) {
+                    document.getElementById("buttonForm").style.visibility="hidden";
+                    }
+				// show buttons when temperature increases
+                else{
+                    document.getElementById("offButton").style.visibility="visible";
+                    setTimeout(function(){document.getElementById("videoButton").style.visibility="visible";},8000);
+                    }
+                        }
+
+        </script>
+
+        <title> {{title}} </title>
+
+        <!--RELOAD AUTOMATICALLY EVERY 10 SECONDS-->
+        <meta http-equiv="refresh" content="10">
+
+        <link rel="stylesheet" href="/static/kitty_style.css">
+    </head>
+
+    <!--hide button until temperature increases-->
+    <body onload="hideButton()">
+        <div class="container">    
+            <div class="center" id="div1">
+                <h1> Welcome to Kitty Alarm Service</h1>
+                {% if stove == True %}
+                    <h3> Stove is ON! Be Careful!</h3>
+                    <h3>The temperature is {{ temp_value }}</h3>
+                    <h3>{{state}}</h3>
+                {% elif stove == False %}
+                    <h3>Stove is off! Good Cat :)</h3>
+                    <h3>Today, We alert {{ goaway }} times.</h3>
+                {% endif %}    
+            </div>
+
+            <div class="center" id="div2">
+                <div class="center" id="div3">
+                    <form action="/StoveOff/" method="post">
+                        <button type ="submit" id="offButton">Turn off</button>
+                    </form>
+                    <a href="video"><button id="videoButton">Watch video</button></a>
+                </div>
+                <picture>
+                    <source srcset="/static/gatito1.webp" type="image/webp">
+                    <source srcset="/static/gatito2.png" type="image/png"> 
+                    <img src="gatito2.png" alt="gatitos" >
+                </picture>
+            </div>
+        </div>
+    </body>
+</html>
